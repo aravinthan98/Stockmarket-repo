@@ -178,9 +178,7 @@ function removefromlist(e){
     localStorage.setItem('products',JSON.stringify(watchlistarr));
     addTowatchlist();
 }
-if (localStorage.length > 0) {
-    addTowatchlist();
-}
+
 function addTowatchlist(){
     
     let list=JSON.parse(localStorage.getItem('products'));
@@ -196,9 +194,9 @@ function addTowatchlist(){
         </div>`;
     });       
 }
-
-addTowatchlist()
-
+if (localStorage.length > 0) {
+    addTowatchlist();
+}
 function addtolocalstorage(){
     let listproducts;
     if(localStorage.getItem("products")){
