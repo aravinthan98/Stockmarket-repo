@@ -9,7 +9,7 @@ let newscontainer=document.querySelector('.news-feed');
 let datetime=document.getElementById('datetime')
 
 let apiArray = ["865DLLK5P0MD6MVP", "UZUT9SLX3B80XXCL", "EKY7LIH1LT1WB1BO",
- "5AFK0YIWM9AL9JQF", "P44XVYYIWNQYMIQW", "FJFVCT5Z9CC9HL4I","YT4X7CD6KBOLTHKH","J4YZY2TSAID1TRKQ"];
+ "5AFK0YIWM9AL9JQF", "P44XVYYIWNQYMIQW", "FJFVCT5Z9CC9HL4I","YT4X7CD6KBOLTHKH","J4YZY2TSAID1TRKQ","QVO7CI89VPLA9EDU","QA01E5JHRX1AZD92","QA01E5JHRX1AZD92"];
 
 let keyForApi = "865DLLK5P0MD6MVP";
 let k=0;
@@ -37,26 +37,29 @@ async function geturl(urlkey,work){
     let response=await url.json();
     keyForApiFn()
     console.log(response,'line36');
-   if(work==="search"&&response.bestMatches.length===0){
-       cards.innerHTML=`<h2>No such result found</h2>`
-    
-   }
-   else if(work==="search"&&response.bestMatches.length!==0){
-        
-        let data=await response.bestMatches;
-        showSearchresult(data);
-    }
-    else if(work==="showdetails"){
-       if(modetype==='INTRADAY'){
-        if(response.hasOwnProperty('Time Series (5min)')) {
-            const timeSeries = response['Time Series (5min)'];
-            const latestEntry = Object.keys(timeSeries)[1];
-            const latestPrice = timeSeries[latestEntry]['4. close'];
-           watchlist[2]=latestPrice;
+
+    if(work==="search"){
+        if(response.bestMatches.length>0){
+            let data=await response.bestMatches;
+            showSearchresult(data);    
         }
-        result.innerHTML=`${watchlist[0]} Intraday Detailts`
-        let data=await response["Time Series (5min)"];      
-        showInformation(data,modetype);
+        else{
+            cards.innerHTML=`<h2>No such result found</h2>`
+         
+        }   
+        
+    }
+    else{
+       if(modetype==='INTRADAY'){
+            if(response.hasOwnProperty('Time Series (5min)')) {
+                const timeSeries = response['Time Series (5min)'];
+                const latestEntry = Object.keys(timeSeries)[1];
+                const latestPrice = timeSeries[latestEntry]['4. close'];
+            watchlist[2]=latestPrice;
+            }
+            result.innerHTML=`${watchlist[0]} Intraday Detailts`
+            let data=await response["Time Series (5min)"];      
+            showInformation(data,modetype);
         }
         else if(modetype==='DAILY_ADJUSTED'){
             if(response.hasOwnProperty('Time Series (Daily)')) {
@@ -97,20 +100,7 @@ async function geturl(urlkey,work){
         
         
     }
-    else if(work==='treanding'){
-       
-        let data=await response.most_actively_traded; 
-       
-        showtrendinggroup(data);    
-    }
-    else if(work==='newsfeed'){
-        let data=await response.feed
-        console.log(data,'response');
-        let timerFn = setInterval(() => {
-            showNewsfeed(data[k], data.length);
-          }, 15000);
-        
-    }
+
     }
     catch (error) {
         console.log('Error:', error);
@@ -118,21 +108,7 @@ async function geturl(urlkey,work){
     
 }
 
-function showNewsfeed(data,len){
-    let { banner_image, title, url } = data;
-    newscontainer.innerHTML =
-          `<img class="news-feed-banner"  src="${data.banner_image}" alt="news-img">
-        <div class="news-feed-a-title">
-            <p class="news-feed-title">${data.title}</p>
-            <a class="newsfeed-anchor-link" href="${data.url}" target="_blank">Read More</a>
-        </div>`;
 
-
-        k++;
-        if (k==len-1) {
-          k=0;
-        }
-}
 function gettime(){
 
     let date=new Date()
@@ -141,29 +117,8 @@ function gettime(){
   datetime.innerHTML=val;
 }
 gettime()
-function showtrendinggroup(data){
-    
-    data.sort((a,b)=>{
-        b=parseInt(b.change_amount)
-        a=parseInt(a.change_amount)
-        
-        return  b - a;
-    })
-    
-    console.log(data[1].ticker,"ticker")
-    document.getElementById('grp1').innerHTML=`<h1>${data[0].ticker}</h1><h2>$ ${data[0].price}</h2><h3><i class="fa-solid fa-arrow-trend-up"></i> ${data[0].change_percentage}</h3>`
-    document.getElementById('grp2').innerHTML=`<h1>${data[1].ticker}</h1><h2>$ ${data[1].price}</h2><h3><i class="fa-solid fa-arrow-trend-up"></i> ${data[1].change_percentage}</h3>`
-    document.getElementById('grp3').innerHTML=`<h1>${data[2].ticker}</h1><h2>$ ${data[2].price}</h2><h3><i class="fa-solid fa-arrow-trend-up"></i> ${data[2].change_percentage}</h3>`
 
-        
 
-}
-function trendinggroup(){
-    let urlkey=`https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=P44XVYYIWNQYMIQW`;
-    console.log(urlkey,"urlkey")
-    geturl(urlkey,"treanding");
-}
-trendinggroup();
 
 function removefromlist(e){
     
@@ -211,6 +166,23 @@ function addtolocalstorage(){
     localStorage.setItem('products',JSON.stringify(listproducts));
 
     addTowatchlist();   
+}
+function checkduplicates(){
+    let listproducts;
+    let isduplicate=false;
+    if(localStorage.getItem("products")){
+        listproducts=JSON.parse(localStorage.getItem("products")); 
+            listproducts.forEach(item=>{
+                if(item.includes(watchlist[0])){
+                    isduplicate=true;
+                }
+            })
+    }
+   if(!isduplicate){
+        addtolocalstorage()
+   }
+    console.log(listproducts,"listproduct");
+   
 }
 
 function showInformation(data){
@@ -277,7 +249,7 @@ function showInformation(data){
 
     addtowatch.onclick=()=>{
           
-        addtolocalstorage();
+        checkduplicates();
     }
 
 
@@ -351,11 +323,76 @@ function viewdetails(e){
     geturl(urlkey,"showdetails");
     
 }
-
-function newsFeedApi(){
-    let urlkey=`https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=AAPL&apikey=${keyForApi}`;
-    console.log(urlkey,"urlkey")
-    geturl(urlkey,"newsfeed");
+//---------------------------------------Trending groups-------------------------------------------------
+async function trendinggroup(){
+    console.log(keyForApi,'line32');
+    let urlkey=`https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=${keyForApi}`;
+    try{
+    let url=await fetch(urlkey);
+    let response=await url.json();
+   
+    let data=await response.most_actively_traded; 
+       
+    showtrendinggroup(data); 
+    
+    }
+    catch (error) {
+        console.log('Error:', error);
+    }
 }
-newsFeedApi();
+function showtrendinggroup(data){
+    
+    data.sort((a,b)=>{
+        b=parseInt(b.change_amount)
+        a=parseInt(a.change_amount)
+        
+        return  b - a;
+    })
+    
+    console.log(data[1].ticker,"ticker")
+    document.getElementById('grp1').innerHTML=`<h1>${data[0].ticker}</h1><h2>$ ${data[0].price}</h2><h3><i class="fa-solid fa-arrow-trend-up"></i> ${data[0].change_percentage}</h3>`
+    document.getElementById('grp2').innerHTML=`<h1>${data[1].ticker}</h1><h2>$ ${data[1].price}</h2><h3><i class="fa-solid fa-arrow-trend-up"></i> ${data[1].change_percentage}</h3>`
+    document.getElementById('grp3').innerHTML=`<h1>${data[2].ticker}</h1><h2>$ ${data[2].price}</h2><h3><i class="fa-solid fa-arrow-trend-up"></i> ${data[2].change_percentage}</h3>`
+
+        
+
+}
+trendinggroup();
+
+//--------------------------------newa feed-------------------------------------------------
+async function getnewsurl(){
+    console.log(keyForApi,'line32');
+    let urlkey=`https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=AAPL&apikey=${keyForApi}`;
+    try{
+    
+    let url=await fetch(urlkey);
+    let response=await url.json();
+   
+    let data=await response.feed
+        console.log(data,'response');
+    let timerFn = setInterval(() => {
+        showNewsfeed(data[k], data.length);
+        }, 15000);
+    
+    }
+    catch (error) {
+        console.log('Error:', error);
+    }
+}
+function showNewsfeed(data,len){
+    let { banner_image, title, url } = data;
+    newscontainer.innerHTML =
+          `<img class="news-feed-banner"  src="${data.banner_image}" alt="news-img">
+        <div class="news-feed-a-title">
+            <p class="news-feed-title">${data.title}</p>
+            <a class="newsfeed-anchor-link" href="${data.url}" target="_blank">Read More</a>
+        </div>`;
+
+        k++;
+        if (k==len-1) {
+          k=0;
+        }
+}
+
+getnewsurl();
 
