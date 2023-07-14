@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stack Market</title>
+    <title>Stock Market</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
@@ -13,6 +13,7 @@
 <body>
  
     <div class="logo">
+        <button id="left-menu" onclick="openLeftMenu()"><i class="fa-solid fa-bars"></i></button>
         <img src="https://images.sftcdn.net/images/t_app-icon-m/p/a9dd92de-a4d4-11e6-aac7-00163ed833e7/3199077626/mystockplanner-stock-market-india-logo.png" alt="logo-img"><span>Stack Market</span>
     </div>
     <nav class="sidenav">
@@ -37,8 +38,8 @@
     <div class="main">
     <div class="left">
     <div class="trending">
-        <h1>Stack Market</h1>
-        <h4>Trending Market Group</h4>
+        <h1 id="titlehead">Stack Market</h1>
+        <h4 id="trendingtitle">Trending Market Group</h4>
         <div class="trendinggroups">
             <div class="group" id="grp1"></div>
             <div class="group" id="grp2"></div>
@@ -47,7 +48,7 @@
     </div>
     <div class="watchlist">
         <div class="viewall">
-          <h1>Your Watch List</h1>
+          <h1 id="watchheadline">Your Watch List</h1>
         </div>
         <div class="watchlistgroups">
 

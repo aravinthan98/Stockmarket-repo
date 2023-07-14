@@ -2,6 +2,10 @@ body{
     
     font-family:'Josefin Sans',sans-serif;
     letter-spacing: 1px;
+    margin: 0;
+    padding: 0;
+
+    
     
 }
 .sidenav{
@@ -13,7 +17,7 @@ body{
     position: fixed;
     z-index: 1;
     overflow-x: hidden;
-    font-size: 20px;
+    font-size: 1rem;
     border-top: 1px solid rgba(15, 206, 206,0.5);  
     background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
 }
@@ -23,8 +27,8 @@ body{
     color: black;
     padding: 6px 8px 6px 16px;
     display: block;
-    margin-left:7px;
-    margin-top: 30px;
+    margin-left:1rem;
+    margin-top: 2rem;
     
     
 }
@@ -33,8 +37,8 @@ i{
     font-size: 1.2rem;
 }
 .topnavbar{
-    margin-left: 260px;
-    height: 70px;
+    margin-left: 17rem;
+    height: 5rem;
     padding: 0px 10px;
     display: flex;
     flex-direction: row;
@@ -118,7 +122,7 @@ i{
 .group{
     /* position: relative; */
     width: 220px;
-    height: 135px;
+    height: 130px;
     /* margin: 10px; */
     background-color:rgb(240, 240, 240);
     
@@ -140,7 +144,7 @@ i{
 #grp3 h2,#grp2 h2,#grp1 h2{
     margin:0px 0px 0px 90px;
     padding: 0px 5px 5px 5px;
-    
+    font-size:1.3rem;
 }
 #grp3 h1,#grp2 h1,#grp1 h1{
     margin:10px 0px 20px 10px;
@@ -245,7 +249,7 @@ padding: 10px 5px 5px 5px;
     visibility: hidden;
     position:absolute;
     width: 55%;
-    height: 75%;
+    height: 80vh;
     background-color: #84fab0;
     left: 20%;
     top: 15%;
@@ -306,7 +310,10 @@ th, td {
     background-color: #96D4D4;
 }
 td{
-    font-size: 17px;
+    font-size: 1rem;
+}
+th{
+    font-size: 1rem;
 }
 th, td{
     padding: 10px 0px 10px 0px;
@@ -395,7 +402,195 @@ table{
 }
 #hline{
     margin-left: 20px;
+    font-size: x-large;
 }
 #datetime{
-    font-size: 15px;
+    font-size: 1rem;
+}
+#left-menu{
+    display: none;
+}
+@media only screen and (max-width: 600px) {
+
+    .sidenav{
+        display: none;
+    }
+    #left-menu{
+        display: block;
+    }
+    .main{
+        width: 100%;
+        height: auto;
+        margin-left: 15px;
+        margin-right: 5px;
+        display: flex;
+        flex-direction: column;
+      
+        position: relative;
+    }
+    .trending{
+        width: 100%;
+        height: 40%;
+    }
+    #titlehead{
+        display: none;
+    }
+    .trendinggroups{
+        display: flex;
+        flex-direction: row;
+        
+        width:100%;
+        flex-wrap: wrap;
+        height: 10rem;
+        margin: 0;
+        overflow-y: scroll;
+    }
+   .group{
+        width: 90%;
+        height: 9rem;
+        margin: 10px 0px 10px 0px;
+    }
+     .left{
+        margin-left: 0;
+        width: 100vw;
+        height: auto;
+    }
+    .right{
+        display: none;
+    } 
+    .topnavbar{
+        margin: 0px;
+        margin-top: 12%;
+        height: 7rem;
+        padding: 0px;
+        display: flex;
+        flex-direction: column-reverse;
+        text-align: center;
+       
+        border-bottom: 2px solid rgb(228, 218, 218);
+        align-items: center; 
+        
+    }
+    #datetime{
+        display: none;
+    }
+    .profile span{
+        display: none;
+    }
+    .logo span{
+        display: none;
+    }
+    .logo{
+        position: fixed;
+        width: 100%;
+    }
+    .profile{
+        position: absolute;
+        top: 2%;
+        right: 1%;
+        z-index: 100;
+
+    }
+    #Notify{
+         position: absolute;
+        top: 4%;
+        right: 25%;
+        z-index: 100;
+    }
+    #trendingtitle{
+        font-size: x-large;
+        margin: 1rem 0px;
+    }
+    .watchheadline{
+        margin-top: 1rem;
+    }
+    .watchlist{
+        margin-top: 1rem;
+        width: 100%;
+        height: 50%;
+        /* display: block; */
+        
+    }
+    .searchbar{
+        width: 80%;
+        height: 3rem;
+        max-width: 100%;
+        border: 2px solid rgb(228, 218, 218);
+        display: flex;
+        justify-content: space-between;
+        border-radius: 5px;
+        margin-top: 3rem;
+    margin-left: 0px;
+      /* margin-left: 5px;
+      margin-right: 5px;    */
+    }
+    #search{
+        width: 100%;
+        font-family:'Josefin Sans',sans-serif;
+        font-size: 16px;
+        outline: none;
+        border: none;
+        background-color:white;
+    }
+    .watchlistgroups{
+        width: 100%;
+        height: 12rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+        grid-gap: 1rem;
+       overflow-y: scroll;
+    }
+    .wgroup{
+        position: relative;
+        width: 150px;
+        height: 180px;
+        text-align: center;
+        background-color:#84fab0;
+        box-sizing: border-box;
+        margin: 0;
+        /* margin: 0px 10px 10px 0px; */
+        overflow: hidden;
+    }
+    .card-container{
+        visibility: hidden;
+        position:absolute;
+        width: 100%;
+        height: 90%;
+        background-color: #84fab0;
+        left: 2%;
+        top: 12%;
+        align-items: center;
+        text-align: center;
+        align-content: center;
+        
+    }
+
+    .cards{
+    
+        position:absolute;
+        width: 90%;
+        height: 85%;
+        background-color: #84fab0;
+        /* margin: 5px 20px 20px 20px; */
+        overflow:hidden;
+        /* scroll-behavior: smooth; */
+        /* display: flex;
+        flex-direction: column; */
+         left: 5%;
+        /* top: 21%; */
+        margin-bottom: 10px;
+        overflow: hidden;
+    }
+    .addtowatchlist{
+        width: 50%;
+        padding: 7px 10px;
+       
+        margin-bottom: 0rem;
+        border-radius: 5px;
+        background-color: #f44336;
+        color: white;
+        cursor: pointer;
+        border: none;
+        outline: none;
+    }
 }
