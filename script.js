@@ -9,15 +9,12 @@ let newscontainer=document.querySelector('.news-feed');
 let datetime=document.getElementById('datetime')
 
 let apiArray = ["865DLLK5P0MD6MVP", "UZUT9SLX3B80XXCL", "EKY7LIH1LT1WB1BO",
- "5AFK0YIWM9AL9JQF", "P44XVYYIWNQYMIQW", "FJFVCT5Z9CC9HL4I","YT4X7CD6KBOLTHKH","J4YZY2TSAID1TRKQ","QVO7CI89VPLA9EDU","QA01E5JHRX1AZD92","QA01E5JHRX1AZD92"];
+ "5AFK0YIWM9AL9JQF", "P44XVYYIWNQYMIQW", "FJFVCT5Z9CC9HL4I","YT4X7CD6KBOLTHKH","J4YZY2TSAID1TRKQ","QVO7CI89VPLA9EDU"];
 
 let keyForApi = "865DLLK5P0MD6MVP";
-let k=0;
+
 let apiIndex = 0;
 let watchlist=[];
-let key;
-let mbtn='intra';
-
 let modetype='INTRADAY';
 function keyForApiFn() { 
     keyForApi = apiArray[apiIndex];
@@ -27,16 +24,15 @@ function keyForApiFn() {
     apiIndex = 0;
   }
 }
-// let watchlistarr=[];
 
 
 async function geturl(urlkey,work){
-    console.log(keyForApi,'line32');
+    // console.log(keyForApi,'line32');
     try{
     let url=await fetch(urlkey);
     let response=await url.json();
     keyForApiFn()
-    console.log(response,'line36');
+    // console.log(response,'line36');
 
     if(work==="search"){
         if(response.bestMatches.length>0){
@@ -55,47 +51,70 @@ async function geturl(urlkey,work){
                 const timeSeries = response['Time Series (5min)'];
                 const latestEntry = Object.keys(timeSeries)[1];
                 const latestPrice = timeSeries[latestEntry]['4. close'];
+                // console.log(latestPrice);
             watchlist[2]=latestPrice;
-            }
+
             result.innerHTML=`${watchlist[0]} Intraday Detailts`
             let data=await response["Time Series (5min)"];      
             showInformation(data,modetype);
+            }
+            else{
+                result.innerHTML=`No Detailts for ${watchlist[0]} INTRADAY now`
+            }
+
         }
         else if(modetype==='DAILY_ADJUSTED'){
             if(response.hasOwnProperty('Time Series (Daily)')) {
                 const timeSeries = response['Time Series (Daily)'];
                 const latestEntry = Object.keys(timeSeries)[1];
                 const latestPrice = timeSeries[latestEntry]['4. close'];
+                // console.log(latestPrice)
                 watchlist[2]=latestPrice;
-            }
+            
             result.innerHTML=`${watchlist[0]} Daily Detailts`
             let data=await response["Time Series (Daily)"];      
             showInformation(data,modetype);
+            }
+            else{
+                result.innerHTML=`No Detailts for ${watchlist[0]} DAILY now`
+            }
+
         }
         else if(modetype==='WEEKLY'){
-            console.log(response)
+            // console.log(response)
             if(response.hasOwnProperty('Weekly Time Series')) {
                 const timeSeries = response['Weekly Time Series'];
                 const latestEntry = Object.keys(timeSeries)[1];
                 const latestPrice = timeSeries[latestEntry]['4. close'];
+                // console.log(latestPrice)
                 watchlist[2]=latestPrice;
-            }
+
             result.innerHTML=`${watchlist[0]} Weekly Detailts`
             let data=await response["Weekly Time Series"];      
             showInformation(data,modetype);
+            }
+            else{
+                result.innerHTML=`No Detailts for ${watchlist[0]} WEEKLY now`
+            }
 
         }
         else if(modetype==='MONTHLY'){
-            console.log(response)
+            // console.log(response)
             if(response.hasOwnProperty('Monthly Time Series')) {
                 const timeSeries = response['Monthly Time Series'];
                 const latestEntry = Object.keys(timeSeries)[1];
                 const latestPrice = timeSeries[latestEntry]['4. close'];
+                console.log(latestPrice)
                 watchlist[2]=latestPrice;
-            }
+            
             result.innerHTML=`${watchlist[0]} Monthly Detailts`
             let data=await response["Monthly Time Series"];      
             showInformation(data,modetype);
+            }
+            else{
+                result.innerHTML=`No Detailts for ${watchlist[0]} MONTHLY now`
+            }
+
         }
         
         
@@ -137,7 +156,7 @@ function removefromlist(e){
 function addTowatchlist(){
     
     let list=JSON.parse(localStorage.getItem('products'));
-    console.log(list)
+    // console.log(list)
     watchcontainer.innerHTML='';
     list.forEach(element => {
         watchcontainer.innerHTML+=
@@ -181,17 +200,17 @@ function checkduplicates(){
    if(!isduplicate){
         addtolocalstorage()
    }
-    console.log(listproducts,"listproduct");
+    // console.log(listproducts,"listproduct");
    
 }
 
 function showInformation(data){
-    cards.innerHTML="";
-    cards.innerHTML+=`<div id="modebtn">
-    <button id="intra" onclick='viewmodedetails("intra","INTRADAY")'>Intraday</button>
-    <button id="daily" onclick='viewmodedetails("daily","DAILY_ADJUSTED")'>Daily</button>
-    <button id="weekly" onclick='viewmodedetails("weekly","WEEKLY")'>Weekly</button>
-    <button id="monthly" onclick='viewmodedetails("monthly","MONTHLY")'>Monthly</button>
+    document.querySelector('body').style.backdropFilter='blur(10px)';
+    cards.innerHTML =`<div id="modebtn">
+    <button id="INTRADAY" onclick='viewmodedetails("INTRADAY")'>Intraday</button>
+    <button id="DAILY_ADJUSTED" onclick='viewmodedetails("DAILY_ADJUSTED")'>Daily</button>
+    <button id="WEEKLY" onclick='viewmodedetails("WEEKLY")'>Weekly</button>
+    <button id="MONTHLY" onclick='viewmodedetails("MONTHLY")'>Monthly</button>
     </div>
     <table style="width:100%">
     <tr>
@@ -205,12 +224,13 @@ function showInformation(data){
     </table>`;
 
  let count=0;
-    console.log(count);
+    // console.log(count);
+    document.getElementById(modetype).style.backgroundColor='#008CBA'
     for(let item in data){
         
         if(data.hasOwnProperty(item)){
         let info=data[item]
-            
+            // console.log(info);
         if(modetype==='DAILY_ADJUSTED'){
             let detail= `<tr>
                     <td>${item}</td>
@@ -224,6 +244,19 @@ function showInformation(data){
             document.querySelector('table').innerHTML+=detail;
         }
         else{
+            if(modetype==='INTRADAY'){
+                let detail= `<tr>
+                        <td>${item.substring(item.length-8)}</td>
+                        <td>${info["1. open"]}</td>
+                        <td>${info["2. high"]}</td>
+                        <td>${info["3. low"]}</td>
+                        <td>${info["4. close"]}</td>
+                        <td>${info["5. volume"]}</td>
+                    </tr>`
+                    
+                document.querySelector('table').innerHTML+=detail;
+            }
+            else{
             let detail= `<tr>
                          <td>${item}</td>
                          <td>${info["1. open"]}</td>
@@ -233,24 +266,29 @@ function showInformation(data){
                          <td>${info["5. volume"]}</td>
                         </tr>`
                  document.querySelector('table').innerHTML+=detail;
+            }        
+        }
         }
                 count++;
                 if(count>4){
                     break;
                 }
-        }
+            
+        
+        
     }
-    console.log(watchlist,"watch");
+    // console.log(watchlist,"watch");
     cards.innerHTML+=`<button class="addtowatchlist">ADD TO WATCHLIST</button>`
-    if(mbtn!==''){
-    document.getElementById(mbtn).style.backgroundColor='#008CBA'
-    }
+   
+    
+    
     let addtowatch=document.querySelector('.addtowatchlist')
 
     addtowatch.onclick=()=>{
           
         checkduplicates();
     }
+
 
 
 }
@@ -275,23 +313,25 @@ sbtn.onclick=(e)=>{
     card_container.style.visibility="visible";
     let urlkey=`https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${input.value}&apikey=${keyForApi}`
     input.value='';
-    console.log(urlkey,"uralk")
+    // console.log(urlkey,"uralk")
     geturl(urlkey,"search");
     
     document.querySelector(".left").style.visibility="hidden";
 }
 
 removesearch.onclick=(e)=>{
+    modetype='INTRADAY'
     cards.innerHTML="";
     result.innerHTML='';
     card_container.style.visibility="hidden";
     document.querySelector(".left").style.visibility="visible";
 }
 
-function viewmodedetails(e,value){
-   mbtn=e;
-    console.log(key,"key")
-    let urlkey=`https://www.alphavantage.co/query?function=TIME_SERIES_${value}&symbol=${key}&interval=5min&apikey=${keyForApi}`;
+function viewmodedetails(value){
+  
+   
+    
+    let urlkey=`https://www.alphavantage.co/query?function=TIME_SERIES_${value}&symbol=${watchlist[0]}&interval=5min&apikey=${keyForApi}`;
     modetype=value;
     geturl(urlkey,"showdetails");
     
@@ -300,46 +340,48 @@ function viewcard(e){
     
     card_container.style.visibility="visible";
     
-    console.log(e.parentElement.firstChild.nextSibling.innerHTML,"viewcard")
-    console.log(e.parentElement.firstChild.nextSibling.nextSibling.innerHTML,"viewcard")
-     key=e.parentElement.firstChild.nextSibling.innerHTML;
-    watchlist[0]=key;
-    watchlist[1]=e.parentElement.firstChild.nextSibling.nextSibling.innerHTML
-    let urlkey=`https://www.alphavantage.co/query?function=TIME_SERIES_${modetype}&symbol=${key}&interval=5min&apikey=${keyForApi}`;
+    // console.log(e.parentElement.firstChild.nextSibling.innerHTML,"viewcard")
+    // console.log(e.parentElement.firstChild.nextSibling.nextSibling.innerHTML,"viewcard")
+ 
+    watchlist[0]=e.parentElement.firstChild.nextSibling.innerHTML;
+    watchlist[1]=e.parentElement.firstChild.nextSibling.nextSibling.innerHTML;
+    let urlkey=`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${watchlist[0]}&interval=5min&apikey=${keyForApi}`;
     document.querySelector(".left").style.visibility="hidden";
   
     geturl(urlkey,"showdetails");
 }
 
 function viewdetails(e){
-    watchlist=[];
-   key =e.firstChild.nextSibling.innerHTML;
-   let keyname=e.lastChild.previousSibling.innerHTML
-   watchlist[0]=key;
-   watchlist[1]=keyname;
 
-    let urlkey=`https://www.alphavantage.co/query?function=TIME_SERIES_${modetype}&symbol=${key}&interval=5min&apikey=${keyForApi}`;
-    console.log(urlkey,"urlkey")
+   watchlist[0]=e.firstChild.nextSibling.innerHTML;
+   watchlist[1]=e.lastChild.previousSibling.innerHTML;
+
+    let urlkey=`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${watchlist[0]}&interval=5min&apikey=${keyForApi}`;
+    // console.log(urlkey,"urlkey")
     geturl(urlkey,"showdetails");
     
 }
 //---------------------------------------Trending groups-------------------------------------------------
 async function trendinggroup(){
-    console.log(keyForApi,'line32');
-    let urlkey=`https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=${keyForApi}`;
+  
+    let urlkey='https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=QA01E5JHRX1AZD92';
     try{
     let url=await fetch(urlkey);
     let response=await url.json();
-   
-    let data=await response.most_actively_traded; 
-       
-    showtrendinggroup(data); 
+    
+    if(response.hasOwnProperty('most_actively_traded')){
+        let data=await response.most_actively_traded; 
+        console.log(data,"data");
+        showtrendinggroup(data); 
+    }
+    
     
     }
     catch (error) {
         console.log('Error:', error);
     }
 }
+
 function showtrendinggroup(data){
     
     data.sort((a,b)=>{
@@ -349,7 +391,7 @@ function showtrendinggroup(data){
         return  b - a;
     })
     
-    console.log(data[1].ticker,"ticker")
+    // console.log(data[1].ticker,"ticker")
     document.getElementById('grp1').innerHTML=`<h1>${data[0].ticker}</h1><h2>$ ${data[0].price}</h2><h3><i class="fa-solid fa-arrow-trend-up"></i> ${data[0].change_percentage}</h3>`
     document.getElementById('grp2').innerHTML=`<h1>${data[1].ticker}</h1><h2>$ ${data[1].price}</h2><h3><i class="fa-solid fa-arrow-trend-up"></i> ${data[1].change_percentage}</h3>`
     document.getElementById('grp3').innerHTML=`<h1>${data[2].ticker}</h1><h2>$ ${data[2].price}</h2><h3><i class="fa-solid fa-arrow-trend-up"></i> ${data[2].change_percentage}</h3>`
@@ -360,27 +402,12 @@ function showtrendinggroup(data){
 trendinggroup();
 
 //--------------------------------newa feed-------------------------------------------------
-async function getnewsurl(){
-    console.log(keyForApi,'line32');
-    let urlkey=`https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=AAPL&apikey=${keyForApi}`;
-    try{
-    
-    let url=await fetch(urlkey);
-    let response=await url.json();
-   
-    let data=await response.feed
-        console.log(data,'response');
-    let timerFn = setInterval(() => {
-        showNewsfeed(data[k], data.length);
-        }, 15000);
-    
-    }
-    catch (error) {
-        console.log('Error:', error);
-    }
-}
+let k=0;
 function showNewsfeed(data,len){
     let { banner_image, title, url } = data;
+    if(data.url===null){
+        data.url=`https://cdn.benzinga.com/files/images/story/2023/07/13/screenshot_2023-07-13_at_5.43.42_pm.png?optimize=medium&dpr=1&auto=webp&width=640`
+    }
     newscontainer.innerHTML =
           `<img class="news-feed-banner"  src="${data.banner_image}" alt="news-img">
         <div class="news-feed-a-title">
@@ -392,6 +419,25 @@ function showNewsfeed(data,len){
         if (k==len-1) {
           k=0;
         }
+}
+async function getnewsurl(){
+   
+    let urlkey=`https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=AAPL&apikey=QA01E5JHRX1AZD92`;
+    try{
+    
+    let url=await fetch(urlkey);
+    let response=await url.json();
+   
+    let data=await response.feed
+        // console.log(data,'response');
+     setInterval(() => {
+        showNewsfeed(data[k], data.length);
+        }, 15000);
+    
+    }
+    catch (error) {
+        console.log('Error:', error);
+    }
 }
 
 getnewsurl();
