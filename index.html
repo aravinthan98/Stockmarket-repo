@@ -13,8 +13,17 @@
 <body>
  
     <div class="logo">
-        <button id="left-menu" onclick="openLeftMenu()"><i class="fa-solid fa-bars"></i></button>
+        <div>
+        <!-- <button id="left-menu" onclick="openLeftMenu()"><i class="fa-solid fa-bars"></i></button> -->
         <img src="https://images.sftcdn.net/images/t_app-icon-m/p/a9dd92de-a4d4-11e6-aac7-00163ed833e7/3199077626/mystockplanner-stock-market-india-logo.png" alt="logo-img"><span>Stack Market</span>
+        </div>
+        <div class="searchbar">
+            <input type="text" id="search" placeholder="Search for simple">
+            <button class="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+        <p id="datetime"></p>
+        <a href="#" id="Notify"><i class="fa-regular fa-bell"></i></a>
+        <div class="profile"><img src="aboutpage.jpg" id="profileimg"><span>Aravinth</span></div>
     </div>
     <nav class="sidenav">
         
@@ -24,22 +33,10 @@
            
         <a href="#"><i class="fa-solid fa-gear"></i> Setting</a> 
     </nav>
-    
-    <nav class="topnavbar">
-       <div class="searchbar">
-        <input type="text" id="search" placeholder="Search for simple">
-        <button class="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-        </div>
-        <p id="datetime"></p>
-        <a href="#" id="Notify"><i class="fa-regular fa-bell"></i></a>
-        <div class="profile"><img src="aboutpage.jpg" id="profileimg"><span>Aravinth</span></div>
-        
-    </nav>
-    <div class="main">
+
     <div class="left">
     <div class="trending">
-        <h1 id="titlehead">Stack Market</h1>
-        <h4 id="trendingtitle">Trending Market Group</h4>
+        <h1 id="titlehead">Trending Market Group</h1>
         <div class="trendinggroups">
             <div class="group" id="grp1"></div>
             <div class="group" id="grp2"></div>
@@ -62,7 +59,7 @@
                 </div>
             </div>
     </div>
-</div>
+
 <div class="card-container">
     <div class="result">
         <h1 id="hline"></h1>
@@ -71,6 +68,9 @@
     <div class="cards">
 
     </div>  
+</div>
+<div class="footer">
+    <p>Footer</p>
 </div>
 
 <script src="script.js" type="text/JavaScript"></script>

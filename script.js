@@ -9,7 +9,7 @@ let newscontainer=document.querySelector('.news-feed');
 let datetime=document.getElementById('datetime')
 
 let apiArray = ["865DLLK5P0MD6MVP", "UZUT9SLX3B80XXCL", "EKY7LIH1LT1WB1BO",
- "5AFK0YIWM9AL9JQF", "P44XVYYIWNQYMIQW", "FJFVCT5Z9CC9HL4I","YT4X7CD6KBOLTHKH","J4YZY2TSAID1TRKQ","QVO7CI89VPLA9EDU"];
+ "5AFK0YIWM9AL9JQF", "P44XVYYIWNQYMIQW", "FJFVCT5Z9CC9HL4I","YT4X7CD6KBOLTHKH","J4YZY2TSAID1TRKQ","QVO7CI89VPLA9EDU","A0N8JXE0OPCIT1CD","FUCFOI6FMDWEIX39"];
 
 let keyForApi = "865DLLK5P0MD6MVP";
 
@@ -27,11 +27,12 @@ function keyForApiFn() {
 
 
 async function geturl(urlkey,work){
-    // console.log(keyForApi,'line32');
+    keyForApiFn()
+    console.log(keyForApi,'line32');
     try{
     let url=await fetch(urlkey);
     let response=await url.json();
-    keyForApiFn()
+    
     // console.log(response,'line36');
 
     if(work==="search"){
@@ -205,7 +206,7 @@ function checkduplicates(){
 }
 
 function showInformation(data){
-    document.querySelector('body').style.backdropFilter='blur(10px)';
+    // document.querySelector('body').style.backdropFilter='blur(10px)';
     cards.innerHTML =`<div id="modebtn">
     <button id="INTRADAY" onclick='viewmodedetails("INTRADAY")'>Intraday</button>
     <button id="DAILY_ADJUSTED" onclick='viewmodedetails("DAILY_ADJUSTED")'>Daily</button>
@@ -225,7 +226,7 @@ function showInformation(data){
 
  let count=0;
     // console.log(count);
-    document.getElementById(modetype).style.backgroundColor='#008CBA'
+    document.getElementById(modetype).style.backgroundColor='#d71035'
     for(let item in data){
         
         if(data.hasOwnProperty(item)){
@@ -310,21 +311,22 @@ sbtn.onclick=(e)=>{
     
     cards.innerHTML="";
     result.innerHTML='Search Results'
-    card_container.style.visibility="visible";
+    card_container.style.display="block";
     let urlkey=`https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${input.value}&apikey=${keyForApi}`
     input.value='';
+    document.querySelector(".left").style.display="none";
     // console.log(urlkey,"uralk")
     geturl(urlkey,"search");
     
-    document.querySelector(".left").style.visibility="hidden";
+    
 }
 
 removesearch.onclick=(e)=>{
     modetype='INTRADAY'
     cards.innerHTML="";
     result.innerHTML='';
-    card_container.style.visibility="hidden";
-    document.querySelector(".left").style.visibility="visible";
+    card_container.style.display="none";
+    document.querySelector(".left").style.display="block";
 }
 
 function viewmodedetails(value){
@@ -338,7 +340,7 @@ function viewmodedetails(value){
 }
 function viewcard(e){
     
-    card_container.style.visibility="visible";
+    card_container.style.display="block";
     
     // console.log(e.parentElement.firstChild.nextSibling.innerHTML,"viewcard")
     // console.log(e.parentElement.firstChild.nextSibling.nextSibling.innerHTML,"viewcard")
@@ -346,7 +348,7 @@ function viewcard(e){
     watchlist[0]=e.parentElement.firstChild.nextSibling.innerHTML;
     watchlist[1]=e.parentElement.firstChild.nextSibling.nextSibling.innerHTML;
     let urlkey=`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${watchlist[0]}&interval=5min&apikey=${keyForApi}`;
-    document.querySelector(".left").style.visibility="hidden";
+    document.querySelector(".left").style.display="none";
   
     geturl(urlkey,"showdetails");
 }
