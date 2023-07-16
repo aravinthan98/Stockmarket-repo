@@ -164,7 +164,7 @@ function addTowatchlist(){
         ` <div class="wgroup">
         <h1 id="syml">${element[0]}</h1><h4>${element[1]}</h4>
         <h2>${element[2]}</h2>
-        <button id="view" onclick="viewcard(this)">View</button>
+        <button id="view" onclick="viewcard(this)">VIEW</button>
         <button class="delete" id=${element[0]} onclick="removefromlist(this)"><i class="fa-solid fa-circle-xmark"></i></button>
         </div>`;
     });       
