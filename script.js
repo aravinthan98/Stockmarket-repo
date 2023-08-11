@@ -6,7 +6,8 @@ let removesearch=document.querySelector(".result button");
 let watchcontainer=document.querySelector('.watchlistgroups')
 let result=document.getElementById('hline');
 let newscontainer=document.querySelector('.news-feed');
-let datetime=document.getElementById('datetime')
+let datetime=document.getElementById('datetime');
+let serc=document.getElementById('mobileserch');
 
 let apiArray = ["865DLLK5P0MD6MVP", "UZUT9SLX3B80XXCL", "EKY7LIH1LT1WB1BO",
  "5AFK0YIWM9AL9JQF", "P44XVYYIWNQYMIQW", "FJFVCT5Z9CC9HL4I","YT4X7CD6KBOLTHKH","J4YZY2TSAID1TRKQ","QVO7CI89VPLA9EDU","A0N8JXE0OPCIT1CD","FUCFOI6FMDWEIX39"];
@@ -33,7 +34,7 @@ async function geturl(urlkey,work){
     let url=await fetch(urlkey);
     let response=await url.json();
     
-    // console.log(response,'line36');
+    console.log(response,'line36');
 
     if(work==="search"){
         if(response.bestMatches.length>0){
@@ -307,20 +308,22 @@ function showSearchresult(data){
 }
 
 
-sbtn.onclick=(e)=>{
-    
+
+function startSearch(val){
     cards.innerHTML="";
     result.innerHTML='Search Results'
     card_container.style.display="block";
-    let urlkey=`https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${input.value}&apikey=${keyForApi}`
+    let urlkey=`https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${val}&apikey=${keyForApi}`
+    console.log(val,"val")
     input.value='';
     document.querySelector(".left").style.display="none";
     // console.log(urlkey,"uralk")
     geturl(urlkey,"search");
     
-    
 }
-
+sbtn.onclick=()=>{
+    startSearch(input.value);
+}
 removesearch.onclick=(e)=>{
     modetype='INTRADAY'
     cards.innerHTML="";
@@ -443,4 +446,43 @@ async function getnewsurl(){
 }
 
 getnewsurl();
+
+
+
+serc.onclick=()=>{
+    document.getElementsByClassName('mobilesrc')[0].style.display='flex';
+    document.getElementsByClassName('wgroup')[0].style.zIndex = "-1";
+    document.getElementsByClassName('wgroup')[1].style.zIndex = "-1";
+   let msbtn =document.getElementById('msubmit');
+    let bcbtn=document.getElementById('backbtn');
+    let minput=document.getElementById('msearch');
+    bcbtn.onclick=()=>{
+        clearandback();
+    }
+   msbtn.onclick=()=>{
+        startSearch(minput.value);
+        minput.value="";
+        clearandback();      
+   }  
+    
+}
+function clearandback(){
+    document.getElementsByClassName('mobilesrc')[0].style.display='none';
+    document.getElementsByClassName('wgroup')[0].style.zIndex = "1";
+    document.getElementsByClassName('wgroup')[1].style.zIndex = "1";
+   
+}
+function openLeftMenu(){
+    document.getElementsByClassName('sidenav')[0].style.display='block';
+    document.getElementsByClassName('wgroup')[0].style.zIndex = "-1";
+    document.getElementsByClassName('wgroup')[1].style.zIndex = "-1";
+    document.getElementById('closebar').style.display='block'; 
+}
+function closeLeftMenu(){ 
+    document.getElementsByClassName('wgroup')[0].style.zIndex = "1";  
+    document.getElementsByClassName('wgroup')[1].style.zIndex = "1";
+    document.getElementById('closebar').style.display='none'; 
+    document.getElementsByClassName('sidenav')[0].style.display='none'; 
+
+}
 
