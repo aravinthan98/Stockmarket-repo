@@ -408,15 +408,15 @@ trendinggroup();
 //--------------------------------newa feed-------------------------------------------------
 let k=0;
 function showNewsfeed(data,len){
+    console.log(data,"data");
     let { banner_image, title, url } = data;
-    if(data.url===null){
-        data.url=`https://cdn.benzinga.com/files/images/story/2023/07/13/screenshot_2023-07-13_at_5.43.42_pm.png?optimize=medium&dpr=1&auto=webp&width=640`
-    }
+    console.log(banner_image, title, url,"data");
+   
     newscontainer.innerHTML =
-          `<img class="news-feed-banner"  src="${data.banner_image}" alt="news-img">
+          `<img class="news-feed-banner"  src="${banner_image}" alt="news-img">
         <div class="news-feed-a-title">
-            <p class="news-feed-title">${data.title}</p>
-            <a class="newsfeed-anchor-link" href="${data.url}" target="_blank">Read More</a>
+            <p class="news-feed-title">${title}</p>
+            <a class="newsfeed-anchor-link" href="${url}" target="_blank">Read More</a>
         </div>`;
 
         k++;

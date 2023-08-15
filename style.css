@@ -232,8 +232,8 @@ body{
     position: fixed;
     top: 13%;
     margin-left: 1050px;
-    width: 100%;
-    height: 75%;
+   width: 22vw;
+    height: 73%;
     padding: 30px 0px 0px 10px;
     background-color: rgba(4, 15, 19,0.2);
     backdrop-filter: blur(10px);
@@ -662,6 +662,22 @@ th, td{
         
         margin: 10px 0px 10px 0px;
     
+    }
+    #grp3 h3,#grp2 h3,#grp1 h3{
+        color:#30be25;
+        margin:0px 0px 0px 190px;
+        padding: 0px 5px 5px 5px;
+        font-size:large;
+    }
+    #grp3 h2,#grp2 h2,#grp1 h2{
+        margin:0px 0px 0px 190px;
+        padding: 0px 5px 5px 5px;
+        font-size:1.3rem;
+    }
+    #grp3 h1,#grp2 h1,#grp1 h1{
+        margin:15px 0px 20px 10px;
+        padding: 10px 5px 5px 5px;
+        font-size:x-large;
     }
 
     .right{
