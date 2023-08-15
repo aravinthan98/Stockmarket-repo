@@ -477,7 +477,7 @@ function openLeftMenu(){
     document.getElementById('closebar').style.display='block'; 
 }
 function closeLeftMenu(){ 
-    document.getElementsByClassName('watchlistgroups')[0].style.display = "block";
+    document.getElementsByClassName('watchlistgroups')[0].style.display = "grid";
     document.getElementsByClassName('sidenav')[0].style.display='none'; 
     document.getElementById('closebar').style.display='none'; 
     
