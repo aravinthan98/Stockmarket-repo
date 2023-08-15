@@ -451,8 +451,8 @@ getnewsurl();
 
 serc.onclick=()=>{
     document.getElementsByClassName('mobilesrc')[0].style.display='flex';
-    document.getElementsByClassName('wgroup')[0].style.zIndex = "-1";
-    document.getElementsByClassName('wgroup')[1].style.zIndex = "-1";
+    document.getElementsByClassName('left')[0].style.display = "none";
+   
    let msbtn =document.getElementById('msubmit');
     let bcbtn=document.getElementById('backbtn');
     let minput=document.getElementById('msearch');
@@ -460,29 +460,28 @@ serc.onclick=()=>{
         clearandback();
     }
    msbtn.onclick=()=>{
+    clearandback();  
         startSearch(minput.value);
         minput.value="";
-        clearandback();      
+            
    }  
     
 }
 function clearandback(){
     document.getElementsByClassName('mobilesrc')[0].style.display='none';
-    document.getElementsByClassName('wgroup')[0].style.zIndex = "1";
-    document.getElementsByClassName('wgroup')[1].style.zIndex = "1";
+    document.getElementsByClassName('left')[0].style.display = "block";
    
 }
 function openLeftMenu(){
-    document.getElementsByClassName('sidenav')[0].style.display='block';
-    document.getElementsByClassName('wgroup')[0].style.zIndex = "-1";
-    document.getElementsByClassName('wgroup')[1].style.zIndex = "-1";
+    document.getElementsByClassName('watchlistgroups')[0].style.display = "none"; 
+    document.getElementsByClassName('sidenav')[0].style.display='block';  
     document.getElementById('closebar').style.display='block'; 
 }
 function closeLeftMenu(){ 
-    document.getElementsByClassName('wgroup')[0].style.zIndex = "1";  
-    document.getElementsByClassName('wgroup')[1].style.zIndex = "1";
-    document.getElementById('closebar').style.display='none'; 
+    document.getElementsByClassName('watchlistgroups')[0].style.display = "block";
     document.getElementsByClassName('sidenav')[0].style.display='none'; 
+    document.getElementById('closebar').style.display='none'; 
+    
 
 }
 
