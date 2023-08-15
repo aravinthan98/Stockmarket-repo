@@ -357,7 +357,6 @@ function viewcard(e){
 }
 
 function viewdetails(e){
-
    watchlist[0]=e.firstChild.nextSibling.innerHTML;
    watchlist[1]=e.lastChild.previousSibling.innerHTML;
 
