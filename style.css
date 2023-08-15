@@ -18,10 +18,8 @@ body{
     height:495px;
     width: 260px;
     position: fixed;
-  
     overflow-x: hidden;
     font-size: 1rem;
-  
     background-color: #040f13;
     border-top: 1px solid rgba(15, 206, 206,0.5);
     color: white;  
@@ -155,6 +153,27 @@ body{
    color: rgb(240, 236, 236);
     
 }
+#grp1{
+    background-image: url("https://img.freepik.com/premium-photo/green-bull-market-run-upward-presents-uptrend-stock-market-financial-business-concept-generative-ai_1423-7208.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    
+}
+#grp2{
+    background-image: url("https://g.foolcdn.com/image/?url=https%3A%2F%2Fg.foolcdn.com%2Feditorial%2Fimages%2F632184%2Fintro-slide-digital-stock-chart-going-up-source-getty.jpg&op=resize&w=400&h=400");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    
+}
+#grp3{
+    background-image: url("https://img.freepik.com/premium-photo/blue-growth-graph-business-chart-data-diagram-success-financial-presentation-background-with-abstract-up-arrow-bar-symbol-finance-marketing-price-statistic-economy-market-profit-investment_79161-2364.jpg?w=360");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    
+}
 .watchlist{
    
         margin-top: 10px;
@@ -231,6 +250,10 @@ body{
     font-size: x-large;
 }
 .wgroup{
+    background-image: url("https://e1.pxfuel.com/desktop-wallpaper/28/606/desktop-wallpaper-stock-market-trading-chart-1475006-2800x2171-for-your-mobile-tablet-share-market-thumbnail.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     position: relative;
     width: 150px;
     height: 180px;
