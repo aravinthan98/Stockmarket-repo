@@ -162,11 +162,12 @@ function addTowatchlist(){
     watchcontainer.innerHTML='';
     list.forEach(element => {
         watchcontainer.innerHTML+=
-        ` <div class="wgroup">
+        ` 
+        <div class="wgroup">
+        <button class="delete" id=${element[0]} onclick="removefromlist(this)"><i class="fa-solid fa-circle-xmark"></i></button>
         <h1 id="syml">${element[0]}</h1><h4>${element[1]}</h4>
         <h2>${element[2]}</h2>
         <button id="view" onclick="viewcard(this)">VIEW</button>
-        <button class="delete" id=${element[0]} onclick="removefromlist(this)"><i class="fa-solid fa-circle-xmark"></i></button>
         </div>`;
     });       
 }
@@ -345,11 +346,11 @@ function viewcard(e){
     
     card_container.style.display="block";
     
-    // console.log(e.parentElement.firstChild.nextSibling.innerHTML,"viewcard")
-    // console.log(e.parentElement.firstChild.nextSibling.nextSibling.innerHTML,"viewcard")
+    console.log(e.parentElement.children[1].innerHTML,"viewcard")
+    console.log(e.parentElement.children[3].innerHTML,"viewcard")
  
-    watchlist[0]=e.parentElement.firstChild.nextSibling.innerHTML;
-    watchlist[1]=e.parentElement.firstChild.nextSibling.nextSibling.innerHTML;
+    watchlist[0]=e.parentElement.children[1].innerHTML;
+    watchlist[1]=e.parentElement.children[3].innerHTML;
     let urlkey=`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${watchlist[0]}&interval=5min&apikey=${keyForApi}`;
     document.querySelector(".left").style.display="none";
   
@@ -408,9 +409,9 @@ trendinggroup();
 //--------------------------------newa feed-------------------------------------------------
 let k=0;
 function showNewsfeed(data,len){
-    console.log(data,"data");
+    // console.log(data,"data");
     let { banner_image, title, url } = data;
-    console.log(banner_image, title, url,"data");
+    // console.log(banner_image, title, url,"data");
    
     newscontainer.innerHTML =
           `<img class="news-feed-banner"  src="${banner_image}" alt="news-img">
@@ -433,7 +434,7 @@ async function getnewsurl(){
     let response=await url.json();
    
     let data=await response.feed
-        // console.log(data,'response');
+        console.log(data,'response');
      setInterval(() => {
         showNewsfeed(data[k], data.length);
         }, 15000);
@@ -472,15 +473,47 @@ function clearandback(){
    
 }
 function openLeftMenu(){
-    document.getElementsByClassName('watchlistgroups')[0].style.display = "none"; 
+   
     document.getElementsByClassName('sidenav')[0].style.display='block';  
     document.getElementById('closebar').style.display='block'; 
 }
 function closeLeftMenu(){ 
-    document.getElementsByClassName('watchlistgroups')[0].style.display = "grid";
+    
     document.getElementsByClassName('sidenav')[0].style.display='none'; 
     document.getElementById('closebar').style.display='none'; 
     
-
 }
+function loginform(){
+
+let signupForm = document.getElementById('signup-form');
+let signinForm = document.getElementById('signin-form');
+let toggleBtn = document.getElementById('toggle-btn');
+
+signupForm.style.display = 'block';
+signinForm.style.display = 'none';
+
+toggleBtn.addEventListener('click', function() {
+    if (signupForm.style.display === 'block') {
+        signupForm.style.display = 'none';
+        signinForm.style.display = 'block';
+        toggleBtn.textContent = "Don't have an account? Sign Up!"
+
+    } else {
+        signinForm.style.display = 'none';
+        signupForm.style.display = 'block';
+        toggleBtn.textContent = "Already have an account? Sign In!"
+
+    }
+})
+}
+let log=document.getElementById('userlogin');
+log.onclick=()=>{
+    document.getElementById('login-page').style.display='block'
+    loginform()
+}
+function closeloginform(){
+    document.getElementById('login-page').style.display='none'
+    
+}
+
 
